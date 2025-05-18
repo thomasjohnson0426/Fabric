@@ -1,0 +1,7 @@
+patient_id,doctor,appointment_date,reason
+101,Dr. Smith,2024-10-21T10:00:00Z,Annual check-up
+102,Dr. Johnson,2024-10-22T14:30:00Z,Consultation
+103,Dr. Williams,2024-10-23T09:15:00Z,Follow-up
+104,Dr. Brown,2024-11-01T11:00:00Z,Physical examination
+105,Dr. Taylor,2024-11-05T15:00:00Z,Flu vaccination
+106,Dr. Anderson,2024-11-10T09:45:00Z,Post-surgery consultation
