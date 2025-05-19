@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { BullModule } from '@nestjs/bull';
 import { ThrottlerModule } from '@nestjs/throttler';
@@ -13,17 +13,26 @@ import { AppointmentModule } from './modules/appointment/appointment.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
-    MongooseModule.forRootAsync({
-      useFactory: () => ({
-        uri:  'mongodb://localhost:27017/healthcare',
-      }),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load: [configuration],
     }),
-    BullModule.forRoot({
-      redis: {
-        host:  'localhost',
-        port: parseInt('6379', 10),
-      },
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        uri: configService.get<string>('MONGO_URI'),
+      }),
+      inject: [ConfigService],
+    }),
+    BullModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        redis: {
+          host: configService.get<string>('REDIS_HOST'),
+          port: configService.get<number>('REDIS_PORT'),
+        },
+      }),
+      inject: [ConfigService],
     }),
     ThrottlerModule.forRoot({ ttl: 60, limit: 20 } as any),
     PatientModule,
