@@ -5,6 +5,11 @@
 This project (Fabric Assessment) implements a REST API for managing patient records and appointments, plus an event-driven CSV/Excel import system. It uses NestJS with TypeScript, MongoDB for persistence, and Redis + Bull for background job processing.
 
 ---
+## Environment Variables
+
+Copy the .env.example file to .env and set the environment variables.
+
+
 ## Running on Local
 
 1. npm install
